@@ -1,0 +1,45 @@
+<?php
+
+$config = [];
+
+// The report-phishing icon can either be displayed on the toolbar or as
+// part of the mark messages menu. Set to false to use the mark menu
+// instead of the toolbar. Default: true.
+$config['markasphishing_toolbar'] = true;
+
+// Usernames allowed to add, edit, enable/disable, or delete entries in the
+// shared report directory (Settings > Phishing Reporting). On a multi-user
+// instance you should set this -- if left null/empty, ANY logged-in user
+// can edit the shared directory, which is only appropriate for
+// single-user installs or testing.
+// Example: $config['markasphishing_admins'] = ['joe.bloggs'];
+$config['markasphishing_admins'] = null;
+
+// Default post-report action for users who haven't set a preference yet
+// (Settings > Phishing Reporting > My reporting preferences).
+// One of: 'folder', 'delete', 'leave'.
+$config['markasphishing_default_action'] = 'delete';
+
+// Default folder name used by the 'folder' post-report action. Created
+// automatically if it doesn't already exist.
+$config['markasphishing_default_folder'] = 'Phishing';
+
+// If a message's sender domain has no explicit entry in the report
+// directory, fall back to abuse@<domain> -- the contact address every
+// domain is expected to run per RFC 2142 -- in addition to whichever
+// authorities are enabled. Set to false to only report to matched
+// providers and authorities.
+$config['markasphishing_rfc2142_fallback'] = true;
+
+// Write a log line (to the 'markasphishing' log) for every report sent,
+// listing the message UID and recipient addresses. Useful for auditing
+// what's been reported and to whom.
+$config['markasphishing_debug'] = false;
+
+// How long (in days) a reported message's Message-ID is remembered before
+// it's eligible for cleanup, used to skip re-sending a report for a message
+// that's already been reported (by any user on this instance -- the dedupe
+// check isn't per-user). Cleanup runs opportunistically on a small fraction
+// of report actions rather than via a cronjob, so there's nothing extra to
+// schedule.
+$config['markasphishing_dedupe_retention_days'] = 90;

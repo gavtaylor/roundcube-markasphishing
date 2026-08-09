@@ -1,0 +1,193 @@
+/* markasphishing: icon using Elastic's own font-icon mechanism, not a
+ * custom image/mask. #messagetoolbar and the contextmenu-plugin popup
+ * both carry Elastic's ".menu" class, and every built-in action (junk,
+ * delete, spam, ...) is styled the same way: `.menu a.<action>:before`
+ * with Elastic's bundled 'Icons' webfont (see skins/elastic/styles/
+ * widgets/menu.less and mixins.less .font-icon-class/.font-icon-solid()
+ * in Roundcube core -- this replicates their computed CSS, since plugin
+ * stylesheets can't use core's LESS mixins directly). One rule covers
+ * both surfaces correctly, matching how markasjunk's own icon works
+ * without needing any plugin-specific CSS at all. */
+
+.menu a.phishing:before {
+    display: block;
+    float: left;
+    margin: 0 .25rem 0 0;
+    width: 1.18em;
+    height: 1em;
+    font-family: 'Icons';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 1.25em;
+    text-align: center;
+    content: "\f21b"; /* fa-user-secret */
+}
+
+.markasphishing-settings {
+    padding: 1em 1.5em 0;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Roundcube's own client JS auto-adds a "form-check" class to any
+ * .propform row containing a checkbox, which renders with plain
+ * display:table-cell columns instead of the flex-based column split
+ * (Bootstrap .row/.col-sm-*) every other row gets -- so the toggle row's
+ * columns end up a different width/position than the rest, regardless of
+ * what classes this plugin itself sets. Forcing consistent table display
+ * with a fixed column split on all rows sidesteps that inconsistency. */
+.markasphishing-settings .propform {
+    display: table !important;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.markasphishing-settings .propform tr {
+    display: table-row !important;
+}
+
+.markasphishing-settings .propform td.title,
+.markasphishing-settings .propform td:not(.title) {
+    display: table-cell !important;
+    padding-top: 0.85em;
+    padding-bottom: 0.85em;
+    vertical-align: top;
+}
+
+.markasphishing-settings .propform td.title {
+    width: 40%;
+    padding-right: 1em;
+}
+
+.markasphishing-settings .propform td:not(.title) {
+    width: 60%;
+}
+
+.markasphishing-settings .propform tr:first-child td {
+    padding-top: 0;
+}
+
+.markasphishing-hint {
+    display: block;
+    margin-top: 0.25em;
+    color: #6a6a6a;
+    font-size: 0.85em;
+    font-weight: normal;
+}
+
+html.dark-mode .markasphishing-hint {
+    color: #9a9a9a;
+}
+
+.markasphishing-settings .formbuttons {
+    display: flex;
+    align-items: center;
+    gap: 1.25em;
+}
+
+.markasphishing-table-scroll {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.markasphishing-table-scroll table {
+    white-space: nowrap;
+}
+
+.markasphishing-savebar {
+    position: sticky;
+    bottom: 0;
+    margin: 1.5em -1.5em 0;
+    padding: 0.75em 1.5em;
+    background: #fff;
+    border-top: 1px solid rgba(128, 128, 128, 0.3);
+}
+
+/* Elastic's dark mode is an in-app toggle (html.dark-mode class), not the
+ * browser/OS prefers-color-scheme -- checked skins/elastic/styles/dark.less
+ * and colors.less in Roundcube core for the actual background it uses. */
+html.dark-mode .markasphishing-savebar {
+    background: #21292c;
+    border-top-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Per-row delete icon in the report directory table, reusing the same
+ * Elastic font-icon technique/font as the toolbar phishing icon above,
+ * with Elastic's own trash-alt codepoint (buttons.less: &.delete:before). */
+a.markasphishing-delete-trigger {
+    display: inline-block;
+    width: 1.25em;
+    height: 1.25em;
+    cursor: pointer;
+    text-align: center;
+}
+
+a.markasphishing-delete-trigger:before {
+    font-family: 'Icons';
+    font-style: normal;
+    font-weight: 400;
+    content: "\f2ed"; /* fa-trash-alt */
+}
+
+a.markasphishing-edit-trigger {
+    display: inline-block;
+    width: 1.25em;
+    height: 1.25em;
+    cursor: pointer;
+    text-align: center;
+}
+
+a.markasphishing-edit-trigger:before {
+    font-family: 'Icons';
+    font-style: normal;
+    font-weight: 900; /* pencil-alt only has a glyph in the solid (900) weight of Elastic's Icons subset -- matches core's own .edit:before, which relies on font-icon-class's 900 default rather than overriding it like .delete:before does */
+    content: "\f303"; /* fa-pencil-alt */
+}
+
+/* Admin-only stat cards above the report directory table. */
+.markasphishing-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    margin: 0.5em 0 1em;
+}
+
+.markasphishing-stat-card {
+    flex: 1 1 8em;
+    min-width: 8em;
+    padding: 0.85em 1em;
+    border-radius: 4px;
+    background: rgba(128, 128, 128, 0.12);
+    border: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+html.dark-mode .markasphishing-stat-card {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.markasphishing-stat-value {
+    font-size: 1.6em;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.markasphishing-stat-label {
+    font-size: 0.85em;
+    color: #6a6a6a;
+}
+
+html.dark-mode .markasphishing-stat-label {
+    color: #9a9a9a;
+}
+
+.markasphishing-stats-top {
+    margin: 0 0 1em;
+    padding-left: 1.25em;
+    font-size: 0.9em;
+}
+
+.markasphishing-stats-top li {
+    margin-bottom: 0.25em;
+}
