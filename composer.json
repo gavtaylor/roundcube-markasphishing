@@ -1,5 +1,5 @@
 {
-    "name": "gavtaylor/roundcube-markasphishing",
+    "name": "gavtaylor/markasphishing",
     "type": "roundcube-plugin",
     "description": "Report phishing emails from Roundcube to provider abuse desks and national anti-phishing authorities",
     "keywords": ["roundcube", "roundcubemail", "webmail", "plugin", "phishing", "security", "email", "abuse"],
