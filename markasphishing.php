@@ -105,11 +105,16 @@ class markasphishing extends rcube_plugin
             $this->add_texts('localization', true);
             $this->add_hook('settings_actions', [$this, 'settings_actions']);
 
-            // loaded via Roundcube's normal script-inclusion path (not an
-            // inline <script> in the settings_form() output) since that
-            // markup can be inserted by Roundcube's own AJAX navigation,
-            // which doesn't execute embedded <script> tags
+            // Both must be loaded unconditionally here, not deferred to
+            // settings_page(): the settings-menu sidebar (and its
+            // markasphishing icon override) is rendered by core on every
+            // settings tab, not just ours, and this script is loaded via
+            // Roundcube's normal script-inclusion path (not an inline
+            // <script> in the settings_form() output) since that markup
+            // can be inserted by Roundcube's own AJAX navigation, which
+            // doesn't execute embedded <script> tags
             $this->include_script('markasphishing.js');
+            $this->include_stylesheet($this->local_skin_path() . '/markasphishing.css');
         }
     }
 

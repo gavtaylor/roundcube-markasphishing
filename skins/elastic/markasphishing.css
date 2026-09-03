@@ -23,6 +23,17 @@
     content: "\f21b"; /* fa-user-secret */
 }
 
+/* Settings tab list entry: without an override here, Elastic falls back to
+ * its generic "settings-default-icon" cog (skins/elastic/styles/styles.less)
+ * for any plugin-added settings action it doesn't recognise. The real
+ * per-action icon comes from `.listing.iconized li.<class> > a:before` in
+ * core's skins/elastic/styles/widgets/lists.less (e.g. `.folders`,
+ * `.identities`) -- same mechanism, using our own class and reusing the
+ * fa-user-secret glyph from the toolbar icon above for visual consistency. */
+#settings-menu li.markasphishing > a:before {
+    content: "\f21b"; /* fa-user-secret */
+}
+
 .markasphishing-settings {
     padding: 1em 1.5em 0;
     max-width: 100%;
